@@ -2,6 +2,8 @@
 
 This project is a **Java-based simulation of an Operating System scheduler**, developed as part of an academic milestone.
 
+Repo: https://github.com/MuhammadMagdyy/os-scheduler-simulation
+
 It demonstrates how an OS handles:
 
 * Process scheduling
@@ -14,28 +16,35 @@ It demonstrates how an OS handles:
 ## 🚀 Features
 
 * Simulates multiple programs running as processes
-* Implements a scheduling algorithm (e.g., Round Robin)
+* Supports multiple scheduling algorithms (Realistic mode): Round Robin, FCFS, SJF, Priority
 * Uses text files to represent memory/disk
 * Tracks process states and execution flow
+* UI includes Timeline + CSV trace export
 
 ---
 
 ## 📁 Project Structure
 
 ```
-OS-Scheduler/
+os-scheduler-simulation/
 │
 ├── src/
 │   ├── OS.java              # Main entry point
-│   ├── Scheduler.java      # Scheduling logic
-│   ├── PCB.java            # Process Control Block
-│   └── Program.java        # Program representation
+│   ├── Scheduler.java       # Legacy scheduling logic (memory/disk simulation)
+│   ├── PCB.java             # Legacy Process Control Block
+│   ├── Program.java         # Legacy program representation
+│   ├── SchedulerUI.java     # Swing UI (Legacy + Realistic)
+│   ├── RealisticOS.java     # Realistic mode (CLI)
+│   ├── RealisticScheduler.java  # Realistic scheduler engine + instruction set
+│   └── ...                  # Supporting types (mutex, events, etc.)
+│
+├── docs/
+│   └── HOW_IT_WORKS.md      # Full documentation
 │
 ├── Program_1.txt           # Input program 1
 ├── Program_2.txt           # Input program 2
 ├── Program_3.txt           # Input program 3
 ├── Disk.txt                # Initial disk state
-├── Final output in the disk.png  # Output result
 ```
 
 ---
@@ -103,14 +112,6 @@ java -cp src RealisticOS
 ## 📚 Full Documentation
 
 - `docs/HOW_IT_WORKS.md`
-
----
-
-## 🖼️ Final Output
-
-Below is the final state of the disk after execution:
-
-![Final Output](output.png)
 
 ---
 
