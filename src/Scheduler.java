@@ -6,23 +6,79 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * Legacy scheduler implementation (original project version).
+ *
+ * <p>This class runs the scheduling simulation inside its constructor and prints a verbose trace.
+ * It also simulates a fixed-size memory and simple swapping to a text file on disk.</p>
+ *
+ * <p>For a more OS-like model (blocking/unblocking + instruction execution), see {@link RealisticScheduler}.</p>
+ */
 public class Scheduler {
 	
+	/**
+	 * Legacy ready queue.
+	 */
 	Queue<Program> readyQueue = new LinkedList<Program>();
+	/**
+	 * Legacy finished queue.
+	 */
 	Queue<Program> finishedQueue = new LinkedList<>();
+	/**
+	 * Legacy PCB queue.
+	 */
 	Queue<PCB>pcbQueue =  new LinkedList<>();
+	/**
+	 * Temporary queue used by the legacy logic.
+	 */
 	Queue<Program> tmpQueue =  new LinkedList<>();
+	/**
+	 * Current PCB working reference (legacy).
+	 */
 	PCB pcb;
+	/**
+	 * Fixed-size memory array used by the legacy simulation.
+	 */
 	Object [] memory = new Object [40];
+	/**
+	 * Current process (program) being executed (legacy).
+	 */
 	Program process;
+	/**
+	 * Buffer used during swapping (saved memory segment written to disk).
+	 */
 	ArrayList <Object> saveMem = new ArrayList<>() ;
+	/**
+	 * Reference to the disk swap file.
+	 */
 	File textFile;
 	
+	/**
+	 * Returns a snapshot of the memory array after/while running the legacy simulation.
+	 */
+	public Object[] getMemorySnapshot() {
+		return memory.clone();
+	}
+
+	/**
+	 * Returns a snapshot of the final disk buffer (what was written to {@code FinalDisk.txt}).
+	 */
+	public List<Object> getFinalDiskSnapshot() {
+		return new ArrayList<>(saveMem);
+	}
+
 	
 	// memory [40] [p1 0 -- 14] [p2 15 --- 29][p3 30 -- 47]
+	/**
+	 * Constructs and immediately runs the legacy scheduler simulation.
+	 *
+	 * @param programs programs queue (arrival order)
+	 * @param quantumTime RR time slice
+	 */
 	public Scheduler(Queue<Program> programs , int quantumTime) throws IOException {
 		 int startOfinstructions=0; 
 		 int end = 0;
@@ -313,13 +369,19 @@ public class Scheduler {
 		
 	}
 	
-	
+	/**
+	 * Prints the full memory array to stdout (legacy debug/trace helper).
+	 */
 	public void displayMemory () {
  		for (int i =0 ; i<memory.length;i++) {
 		 	System.out.println( memory[i]+ " ");
 
  		}
 	}
+
+	/**
+	 * Writes the saved swap buffer to {@code FinalDisk.txt} (legacy).
+	 */
 	public void displayDisk() {
 		try {
 		try {
@@ -341,7 +403,11 @@ public class Scheduler {
 		}
 		
 	}
-			public  void loadMemory (int x, int y) {  
+
+	/**
+	 * Loads the contents of {@code Disk.txt} into memory between indices {@code x..y} (inclusive).
+	 */
+	public  void loadMemory (int x, int y) {  
 			try {
 				
 				BufferedReader reader = new BufferedReader (new FileReader("Disk.txt"));
@@ -360,6 +426,9 @@ public class Scheduler {
 		} 	
 
  		
+		/**
+		 * Writes the current {@link #saveMem} buffer to {@code Disk.txt} to simulate swapping.
+		 */
  		public void loadDisk (int x, int y) { 
  			try {
  			    textFile = new File("Disk.txt"); 
@@ -376,6 +445,9 @@ public class Scheduler {
  			}
  		}
  		
+		/**
+		 * Unused legacy main.
+		 */
  		public static void main (String [] args) {
  			
  		}

@@ -53,6 +53,59 @@ OS-Scheduler/
 
 ---
 
+## 🖥️ Run With UI (Swing)
+
+You can run the simulator from a simple desktop UI:
+
+1. Open the project in IntelliJ IDEA or Eclipse
+2. Run:
+
+   ```
+   SchedulerUI.java
+   ```
+
+Or from the terminal (project root):
+
+```
+javac src/*.java
+java -cp src SchedulerUI
+```
+
+In the UI, choose `Mode`:
+
+- `Legacy`: runs the original implementation and shows `Memory` + `FinalDisk`
+- `Realistic`: runs a more OS-like simulation with proper blocking/unblocking on `semWait/semSignal` and executes instructions like `assign`, `print`, `readFile`, `writeFile`
+
+### How the UI Works
+
+- `Programs` table: set each program file path and arrival time.
+- `Quantum`: number of instruction slots per CPU turn (Round Robin).
+- `Console` tab: full trace of what happened (arrivals, running, blocking, outputs).
+- `Memory` / `FinalDisk` tabs (Legacy mode only): snapshots taken from the legacy scheduler implementation.
+- `Summary` tab (Realistic mode): per-process timing metrics (start/finish/turnaround/response) + final variables.
+- `Input` tab (Realistic mode): when a process executes `assign X input`, the simulation pauses and waits until you submit a value.
+- `Timeline` tab (Realistic mode): structured events + a simple Gantt view; export via `File → Export Trace (CSV)`.
+
+## ▶️ Run Realistic Mode (CLI)
+
+```
+javac src/*.java
+java -cp src RealisticOS
+```
+
+### How Realistic Mode Works (High Level)
+
+- **Scheduling**: Round Robin using the chosen quantum.
+- **Mutexes/Semaphores**: `semWait <name>` acquires a mutex or blocks; `semSignal <name>` releases or transfers ownership to the next blocked process.
+- **States**: `NEW → READY → RUNNING → (BLOCKED) → READY → FINISHED`.
+- **Time model**: time increases by 1 per instruction slot.
+
+## 📚 Full Documentation
+
+- `docs/HOW_IT_WORKS.md`
+
+---
+
 ## 🖼️ Final Output
 
 Below is the final state of the disk after execution:

@@ -28,3 +28,16 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Java build artifacts ###
+*.class
+
+### Simulator generated files ###
+trace.csv
+file1.txt
+FinalDisk.txt
+
+### Accidental stdin capture files ###
+1
+2
+3
