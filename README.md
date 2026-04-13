@@ -112,6 +112,7 @@ java -cp src RealisticOS
 ## 📚 Full Documentation
 
 - `docs/HOW_IT_WORKS.md`
+- How it works (GitHub): https://github.com/MuhammadMagdyy/os-scheduler-simulation/blob/main/docs/HOW_IT_WORKS.md
 
 ---
 
